@@ -1,19 +1,41 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Input } from "../components/Input";
+import {
+  FieldErrors,
+  SubmitHandler,
+  useForm,
+  UseFormRegister,
+} from "react-hook-form";
+import { Inputs } from "../types/type";
 
 enum Variant {
   SIGN_UP,
   LOG_IN,
 }
 
+export type AuthFormContextType = {
+  register: UseFormRegister<Inputs> | null;
+  errors: FieldErrors<Inputs>;
+};
+
+export const AuthFormContext = createContext<AuthFormContextType>({
+  register: null,
+  errors: {},
+});
+
 export function Login() {
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<
+    Inputs
+  >();
   const [variant, setVariant] = useState(Variant.LOG_IN);
 
   function handleChangeVariant() {
     if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
     else setVariant(Variant.LOG_IN);
   }
+
+  function onSubmit({ email, password, username }): SubmitHandler<Inputs> {}
 
   return (
     <div className="h-full w-screen">
@@ -24,37 +46,56 @@ export function Login() {
             {variant == Variant.SIGN_UP ? "Sign up" : "Log in"}
           </h2>
 
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={() => console.log("Submitted")}
-          >
-            {variant === Variant.SIGN_UP && (
-              <Input id="username" type="text" placeholder="Username" />
-            )}
-            <Input
-              id="email"
-              type="email"
-              placeholder="Email"
-            />
-            <Input
-              id="password"
-              type="password"
-              placeholder="Password"
-            />
-
-            <select
-              id="type"
-              className="block rounded-md p-2.5 mb-2 w-full text-md focus:outline-none focus:ring-0 peer invalid:border-b-1 text-gray-900"
+          <AuthFormContext.Provider value={{ register, errors }}>
+            <form
+              className="flex flex-col gap-4"
+              onSubmit={handleSubmit(onSubmit)}
             >
-              <option selected>Staff</option>
-              <option>Customer</option>
-            </select>
+              {variant === Variant.SIGN_UP && (
+                <Input
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="Username"
+                />
+              )}
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Email"
+              />
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Password"
+                validate={variant === Variant.SIGN_UP
+                  ? () => {
+                    const password = getValues("password");
+                    if (password.length < 8) {
+                      return "Password must be more than 8 characters";
+                    }
+                    return true;
+                  }
+                  : undefined}
+              />
 
-            <input
-              type="submit"
-              className="bg-red-400 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700"
-            />
-          </form>
+              <select
+                id="type"
+                name="type"
+                className="block rounded-md p-2.5 mb-2 w-full text-md focus:outline-none focus:ring-0 peer invalid:border-b-1 text-gray-900"
+              >
+                <option selected>Staff</option>
+                <option>Customer</option>
+              </select>
+
+              <input
+                type="submit"
+                className="bg-red-400 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700"
+              />
+            </form>
+          </AuthFormContext.Provider>
 
           {variant === Variant.LOG_IN
             ? (

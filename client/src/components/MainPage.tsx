@@ -1,8 +1,16 @@
-import { Service } from "../pages/Service";
+import { useState } from "react";
+import { CreateService } from "../components/CreateService";
 import Navbar from "./Navbar";
 import { Sidebar } from "./Sidebar";
 
+enum Components {
+  CREATE,
+  BROWSE,
+  CUSTOMERS,
+}
+
 export function MainPage() {
+  const [component, setComponent] = useState(Components.CREATE);
   return (
     <div>
       <Navbar />
@@ -12,7 +20,7 @@ export function MainPage() {
           <div className="p-4 h-full border-2 border-gray-200 border-dashed rounded-lg flex justify-center item-center">
             <div className="flex justify-center items-center ">
               <div className="flex items-center justify-center rounded h-full bg-gray-100 p-5">
-                <Service />
+                {component === Components.CREATE && <CreateService />}
               </div>
             </div>
           </div>
