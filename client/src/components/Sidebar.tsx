@@ -1,4 +1,21 @@
-export function Sidebar() {
+import { useState } from "react";
+
+type select = {
+  selectedState: (text: string) => void;
+};
+
+export function Sidebar({ selectedState }: select) {
+  const [state, setState] = useState("create");
+  function handleCreateServiceClick() {
+    selectedState("create");
+    setState("create");
+  }
+
+  function handleBrowseServiceClick() {
+    selectedState("browse");
+    setState("browse");
+  }
+
   return (
     <aside
       id="separator-sidebar"
@@ -10,7 +27,10 @@ export function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200"
+                onClick={handleCreateServiceClick}
+                className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
+                  state === "create" ? "bg-gray-200" : null
+                }`}
               >
                 <p className="flex-1 ms-3 whitespace-nowrap">
                   Create Service
@@ -20,15 +40,20 @@ export function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200"
+                onClick={handleBrowseServiceClick}
+                className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
+                  state === "browse" ? "bg-gray-200" : null
+                }`}
               >
-                <p className="flex-1 ms-3 whitespace-nowrap">Browse Services</p>
+                <p className="flex-1 ms-3 whitespace-nowrap">
+                  Browse Services
+                </p>
               </a>
             </li>
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200"
+                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200"
               >
                 <p className="flex-1 ms-3 whitespace-nowrap">Customers</p>
               </a>
@@ -36,7 +61,7 @@ export function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200"
+                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200"
               >
                 <p className="flex-1 ms-3 whitespace-nowrap">Products</p>
               </a>

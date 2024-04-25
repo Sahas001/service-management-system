@@ -12,12 +12,21 @@ enum Components {
 }
 
 export function MainPage() {
-  const [component, setComponent] = useState(Components.BROWSE);
+  const [component, setComponent] = useState(Components.CREATE);
+
+  const handleChildData = (data: string) => {
+    if (data === "create") {
+      setComponent(Components.CREATE);
+    } else {
+      setComponent(Components.BROWSE);
+    }
+  };
+
   return (
     <div>
       <Navbar />
       <div className="flex flex-row">
-        <Sidebar />
+        <Sidebar selectedState={handleChildData} />
         <div className="p-4 sm:ml-64 h-screen mt-16">
           <div className="p-4 h-full border-2 border-gray-200 border-dashed rounded-lg flex justify-center item-center">
             <div className="flex justify-center items-center ">
