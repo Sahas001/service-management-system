@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type Staff struct {
@@ -23,9 +24,10 @@ type Customer struct {
 }
 
 type Product struct {
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Price       float32 `json:"price"`
 }
 
 var (
@@ -41,7 +43,7 @@ func main() {
 	router := mux.NewRouter()
 
 	// Seed data
-	products = append(products, Product{1, "Transportation", "Service providing transportation from point a to b."}, Product{2, "Communication", "Communication service between consumers."})
+	products = append(products, Product{1, "Transportation", "Service providing transportation from point a to b.", 1233}, Product{2, "Communication", "Communication service between consumers.", 3421}, Product{3, "Banking", "Providing monetary services.", 1221})
 	staffs = append(staffs, Staff{1, "Sahas Timilsina", "CEO"}, Staff{2, "Neo", "CTO"})
 	customers = append(customers, Customer{1, "Samyog Timilsina"}, Customer{2, "Po"})
 
@@ -54,7 +56,14 @@ func main() {
 	router.HandleFunc("/staffs", getStaffs).Methods("GET")
 	router.HandleFunc("/customers", getCustomers).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(*bindAddress, router))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowCredentials: true,
+	})
+
+	handler := c.Handler(router)
+
+	log.Fatal(http.ListenAndServe(*bindAddress, handler))
 	l.Println("Starting server on port ", *bindAddress)
 }
 
