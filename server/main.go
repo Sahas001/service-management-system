@@ -19,8 +19,9 @@ type Staff struct {
 }
 
 type Customer struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID           int    `json:"id"`
+	Name         string `json:"name"`
+	Organization string `json:"org"`
 }
 
 type Product struct {
@@ -44,12 +45,12 @@ func main() {
 
 	// Seed data
 	products = append(products, Product{1, "Transportation", "Service providing transportation from point a to b.", 1233}, Product{2, "Communication", "Communication service between consumers.", 3421}, Product{3, "Banking", "Providing monetary services.", 1221})
-	staffs = append(staffs, Staff{1, "Sahas Timilsina", "CEO"}, Staff{2, "Neo", "CTO"})
-	customers = append(customers, Customer{1, "Samyog Timilsina"}, Customer{2, "Po"})
+	staffs = append(staffs, Staff{1, "John Doe", "CEO"}, Staff{2, "Neo", "CTO"})
+	customers = append(customers, Customer{1, "Clint Eastwood", "clint corporation"}, Customer{2, "Po", "po foundation"}, Customer{3, "Viggo Mortensen", "AHV pvt ltd."})
 
 	router.HandleFunc("/products", getProducts).Methods("GET")
 	router.HandleFunc("/products/{id}", getProduct).Methods("GET")
-	router.HandleFunc("/products", createProduct).Methods("product")
+	router.HandleFunc("/products", createProduct).Methods("POST")
 	router.HandleFunc("/products/{id}", updateProduct).Methods("PUT")
 	router.HandleFunc("/products/{id}", deleteProduct).Methods("DELETE")
 
