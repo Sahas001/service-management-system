@@ -14,3 +14,9 @@ export type Service = {
   description: string;
   price: number;
 };
+
+export type Customer = {
+  id: number;
+  name: string;
+  org: string;
+};

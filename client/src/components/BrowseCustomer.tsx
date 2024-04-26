@@ -1,14 +1,14 @@
-import { useServiceList } from "../hooks/useServiceList";
+import { useCustomerList } from "../hooks/useCustomerList";
 import { Card } from "./Card";
 
-export function BrowseService() {
-  const { data, loading, error } = useServiceList();
+export function BrowseCustomer() {
+  const { data, loading, error } = useCustomerList();
   console.log(data);
   return (
     <div className="flex-col justify-center items-center h-full">
-      <div className="p-16 flex-1 mt-2 w-full max-w-md rounded-md">
+      <div className="p-20 flex-1 mt-2 w-full max-w-md rounded-md">
         <h2 className="text-4xl mb-8 font-semibold">
-          Services
+          Customers
         </h2>
         {error && <p>{error}</p>}
         {data && data.map((data) => (
@@ -18,7 +18,7 @@ export function BrowseService() {
             >
               <Card
                 name={data.name}
-                description={data.description}
+                organization={data.org}
               />
             </li>
           </ul>

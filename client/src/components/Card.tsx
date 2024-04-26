@@ -1,6 +1,10 @@
-import { Service } from "../types/type";
+type CardProps = {
+  name: string;
+  description?: string;
+  organization?: string;
+};
 
-export function ServiceCard({ name, description }: Service) {
+export function Card({ name, description, organization }: CardProps) {
   return (
     <div className="max-w-sm p-6 bg-white border rounded-lg shadow mb-7">
       <a href="#">
@@ -9,7 +13,7 @@ export function ServiceCard({ name, description }: Service) {
         </h5>
       </a>
       <p className="mb-3 font-normal text-gray-700">
-        {description}
+        {description ? description : organization}
       </p>
       <a
         href="#"

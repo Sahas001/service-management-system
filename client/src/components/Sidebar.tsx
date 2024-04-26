@@ -16,6 +16,11 @@ export function Sidebar({ selectedState }: select) {
     setState("browse");
   }
 
+  function handleBrowseCustomerClick() {
+    selectedState("customer");
+    setState("customer");
+  }
+
   return (
     <aside
       id="separator-sidebar"
@@ -53,9 +58,14 @@ export function Sidebar({ selectedState }: select) {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200"
+                onClick={handleBrowseCustomerClick}
+                className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
+                  state === "customer" ? "bg-gray-200" : null
+                }`}
               >
-                <p className="flex-1 ms-3 whitespace-nowrap">Customers</p>
+                <p className="flex-1 ms-3 whitespace-nowrap">
+                  Customers
+                </p>
               </a>
             </li>
             <li>
@@ -63,7 +73,7 @@ export function Sidebar({ selectedState }: select) {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200"
               >
-                <p className="flex-1 ms-3 whitespace-nowrap">Products</p>
+                <p className="flex-1 ms-3 whitespace-nowrap">About</p>
               </a>
             </li>
           </ul>

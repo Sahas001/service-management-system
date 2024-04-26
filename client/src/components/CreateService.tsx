@@ -3,6 +3,7 @@ import { Input } from "../components/Input";
 import { AuthFormContext } from "../pages/Login";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Inputs } from "../types/type";
+import useAuth from "../hooks/useAuth";
 
 enum Variant {
   CREATE,
@@ -15,21 +16,28 @@ export function CreateService() {
     Inputs
   >();
 
-  const onSubmit: SubmitHandler<Inputs> = (
+  const { addService } = useAuth();
+
+  const onSubmit: SubmitHandler<Inputs> = async (
     { serviceName, description, price },
   ) => {
-    if (variant === Variant.CREATE) {
-      console.log({ serviceName, description, price });
-      return { serviceName, description, price };
-    } else {
-      console.log({ serviceName, description });
-      return { serviceName, description };
+    try {
+      if (variant === Variant.CREATE) {
+        await addService({
+          name: serviceName,
+          description,
+          price: parseInt(price),
+        });
+        console.log("submitted");
+      }
+    } catch (error) {
+      console.log("error");
     }
   };
 
   return (
     <div className="flex justify-center items-center h-full">
-      <div className="p-16 self-center mt-2 w-full max-w-md rounded-md">
+      <div className="p-20 self-center mt-2 w-full max-w-md rounded-md">
         <h2 className="text-4xl mb-8 font-semibold">
           {variant === Variant.CREATE ? "Create Service" : "Request Service"}
         </h2>

@@ -18,7 +18,7 @@ export default function Banner() {
           <div className="mt-8">
             <a
               href="/login"
-              className="bg-gray-700 mt-8 text-white p-4 px-16 text-lg rounded font-semibold hover:bg-black"
+              className="bg-red-400 mt-8 text-white p-4 px-16 text-lg rounded font-semibold hover:bg-red-700"
             >
               Sign up
             </a>
