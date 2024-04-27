@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Input } from "../components/Input";
 import {
@@ -29,13 +29,25 @@ export function Login() {
     Inputs
   >();
   const [variant, setVariant] = useState(Variant.LOG_IN);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   function handleChangeVariant() {
     if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
     else setVariant(Variant.LOG_IN);
   }
 
-  function onSubmit({ email, password, username }): SubmitHandler<Inputs> {}
+  const onSubmit: SubmitHandler<Inputs> = (
+    { email, password, username },
+  ) => {
+    const type = selectRef.current?.value;
+    try {
+      if (variant === Variant.SIGN_UP) {
+        console.log({ email, password, username, type });
+      } else {
+        console.log({ email, password, type });
+      }
+    } catch (error) {}
+  };
 
   return (
     <div className="h-full w-screen">
@@ -85,9 +97,10 @@ export function Login() {
                 id="type"
                 name="type"
                 className="block rounded-md p-2.5 mb-2 w-full text-md focus:outline-none focus:ring-0 peer invalid:border-b-1 text-gray-900"
+                ref={selectRef}
               >
-                <option selected>Staff</option>
-                <option>Customer</option>
+                <option value="STA">Staff</option>
+                <option value="CUS">Customer</option>
               </select>
 
               <input
