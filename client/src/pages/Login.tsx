@@ -8,6 +8,7 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import { Inputs } from "../types/type";
+import { useNavigate } from "react-router-dom";
 
 enum Variant {
   SIGN_UP,
@@ -30,6 +31,7 @@ export function Login() {
   >();
   const [variant, setVariant] = useState(Variant.LOG_IN);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const navigate = useNavigate();
 
   function handleChangeVariant() {
     if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
@@ -46,7 +48,10 @@ export function Login() {
       } else {
         console.log({ email, password, type });
       }
-    } catch (error) {}
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -4,10 +4,11 @@ import logo from "../assets/customer-service.png";
 enum User {
   STAFF,
   CUSTOMER,
+  NULL,
 }
 
 export default function Navbar() {
-  const [user, setUser] = useState(User.STAFF);
+  const [user, setUser] = useState(User.NULL);
   return (
     <nav className="w-full z-40 fixed rounded-lg">
       <div className="px-16 py-5 flex bg-gray-50 items center">
