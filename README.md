@@ -7,7 +7,7 @@
 - First clone the repo
 - then `cd client`, `npm install` and finally `npm run dev`
 
-**Note: This project is not complete.**
+***Note: This project is not complete.***
 
 ### Creating Services
 
