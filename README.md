@@ -2,12 +2,14 @@
 
 ### using react and go
 
-## To run the frontend
+## To run
 
 - First clone the repo
+- `cd server`, `go mod tidy`
 - then `cd client`, `npm install` and finally `npm run dev`
 
-***Note: not complete.***
+
+***Note: not complete***
 
 ### Creating Services
 
