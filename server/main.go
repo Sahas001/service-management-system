@@ -49,10 +49,10 @@ func main() {
 	customers = append(customers, Customer{1, "Clint Eastwood", "clint corporation"}, Customer{2, "Po", "po foundation"}, Customer{3, "Viggo Mortensen", "AHV pvt ltd."})
 
 	router.HandleFunc("/products", getProducts).Methods("GET")
-	router.HandleFunc("/products/{id}", getProduct).Methods("GET")
+	router.HandleFunc("/product/{id}", getProduct).Methods("GET")
 	router.HandleFunc("/products", createProduct).Methods("POST")
-	router.HandleFunc("/products/{id}", updateProduct).Methods("PUT")
-	router.HandleFunc("/products/{id}", deleteProduct).Methods("DELETE")
+	router.HandleFunc("/product/{id}", updateProduct).Methods("PUT")
+	router.HandleFunc("/product/{id}", deleteProduct).Methods("DELETE")
 
 	router.HandleFunc("/staffs", getStaffs).Methods("GET")
 	router.HandleFunc("/customers", getCustomers).Methods("GET")
