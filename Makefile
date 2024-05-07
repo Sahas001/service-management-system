@@ -1,4 +1,6 @@
-front:
+client:
 	cd client && npm run dev
-serve:
+server:
 	cd server && go run main.go
+
+.PHONY: client server

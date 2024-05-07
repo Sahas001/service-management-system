@@ -9,14 +9,14 @@ export type Inputs = {
 };
 
 export type Service = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: number;
 };
 
 export type Customer = {
-  id: number;
+  id: string;
   name: string;
   org: string;
 };

@@ -31,7 +31,6 @@ export function Sidebar({ selectedState }: select) {
           <ul className="space-y-2 font-medium my-10">
             <li>
               <a
-                href="#"
                 onClick={handleCreateServiceClick}
                 className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
                   state === "create" ? "bg-gray-200" : null
@@ -44,7 +43,6 @@ export function Sidebar({ selectedState }: select) {
             </li>
             <li>
               <a
-                href="#"
                 onClick={handleBrowseServiceClick}
                 className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
                   state === "browse" ? "bg-gray-200" : null

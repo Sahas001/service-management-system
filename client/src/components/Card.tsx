@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 type CardProps = {
+  id: string;
   name: string;
   description?: string;
   organization?: string;
+  onCLick?: () => void;
 };
 
-export function Card({ name, description, organization }: CardProps) {
+export function Card({ id, name, description, organization }: CardProps) {
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-sm p-6 bg-white border rounded-lg shadow mb-7">
       <a href="#">
@@ -17,6 +23,7 @@ export function Card({ name, description, organization }: CardProps) {
       </p>
       <a
         href="#"
+        onClick={() => navigate(`/home/service/${id}`)}
         className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-400 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 "
       >
         Read more
@@ -29,9 +36,9 @@ export function Card({ name, description, organization }: CardProps) {
         >
           <path
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M1 5h12m0 0L9 1m4 4L9 9"
           />
         </svg>

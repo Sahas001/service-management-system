@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage.tsx";
 import { Login } from "./pages/Login.tsx";
 import { MainPage } from "./components/MainPage.tsx";
+import ServicePage from "./pages/ServicePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/home",
-        element: <MainPage />,
+        element: <App />,
+        children: [
+          {
+            path: "/home",
+            element: <MainPage />,
+          },
+          {
+            path: "/home/service/:id",
+            element: <ServicePage />,
+          },
+        ],
       },
     ],
   },

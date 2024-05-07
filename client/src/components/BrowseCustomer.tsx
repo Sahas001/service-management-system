@@ -12,11 +12,10 @@ export function BrowseCustomer() {
         </h2>
         {error && <p>{error}</p>}
         {data && data.map((data) => (
-          <ul>
-            <li
-              key={data.id}
-            >
+          <ul key={data.id}>
+            <li>
               <Card
+                id={data.id}
                 name={data.name}
                 organization={data.org}
               />
