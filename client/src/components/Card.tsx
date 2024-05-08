@@ -5,7 +5,7 @@ type CardProps = {
   name: string;
   description?: string;
   organization?: string;
-  onCLick?: () => void;
+  onClick?: () => void;
 };
 
 export function Card({ id, name, description, organization }: CardProps) {

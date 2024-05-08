@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/customer-service.png";
 
-enum User {
+export enum User {
   STAFF,
   CUSTOMER,
   NULL,
