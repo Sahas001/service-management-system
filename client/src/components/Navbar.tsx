@@ -7,7 +7,7 @@ export enum User {
   NULL,
 }
 
-export default function Navbar() {
+export default function Navbar({ type }) {
   const [user, setUser] = useState(User.NULL);
   return (
     <nav className="w-full z-40 fixed rounded-lg">
@@ -20,10 +20,10 @@ export default function Navbar() {
         </div>
         <div className="cursor-pointer">
           <p className="text-xl font-bold cursor-pointer">
-            {user === User.STAFF && (
+            {type === User.STAFF && (
               "Staff Control Panel"
             )}
-            {user === User.CUSTOMER && (
+            {type === User.CUSTOMER && (
               "Customer Control Panel"
             )}
           </p>

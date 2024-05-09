@@ -1,5 +1,5 @@
 import { createContext, useRef, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar, { User } from "../components/Navbar";
 import { Input } from "../components/Input";
 import {
   FieldErrors,
@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import { Inputs } from "../types/type";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../AppContext";
 
 enum Variant {
   SIGN_UP,
@@ -32,6 +33,7 @@ export function Login() {
   const [variant, setVariant] = useState(Variant.LOG_IN);
   const selectRef = useRef<HTMLSelectElement>(null);
   const navigate = useNavigate();
+  const { user, dispatch } = useAppContext();
 
   function handleChangeVariant() {
     if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
@@ -41,12 +43,27 @@ export function Login() {
   const onSubmit: SubmitHandler<Inputs> = (
     { email, password, username },
   ) => {
+    dispatch({ type: "authenticate" });
+
     const type = selectRef.current?.value;
+
+    if (type === "STA") {
+      dispatch({
+        type: "authenticated",
+        user: User.STAFF,
+      });
+    } else {
+      dispatch({
+        type: "authenticated",
+        user: User.CUSTOMER,
+      });
+    }
+
     try {
       if (variant === Variant.SIGN_UP) {
         console.log({ email, password, username, type });
       } else {
-        console.log({ email, password, type });
+        console.log({ email, password, type, user });
       }
       navigate("/home");
     } catch (error) {
@@ -56,7 +73,7 @@ export function Login() {
 
   return (
     <div className="h-full w-screen">
-      <Navbar />
+      <Navbar type={user} />
       <div className="flex justify-center items-center h-full">
         <div className="bg-black bg-opacity-70 p-16 self-center mt-20 w-full max-w-md rounded-md">
           <h2 className="text-white text-4xl mb-8 font-semibold">
