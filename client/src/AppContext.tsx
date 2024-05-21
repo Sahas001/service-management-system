@@ -8,7 +8,7 @@ type State = {
 };
 
 const initialState: State = {
-  user: undefined,
+  user: User.CUSTOMER,
   permissions: undefined,
   loading: false,
 };

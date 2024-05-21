@@ -19,6 +19,11 @@ export function MainPage() {
 
   console.log(user);
 
+  if (!user) {
+    console.log("No User");
+    return <p>No User</p>;
+  }
+
   const handleChildData = (data: string) => {
     if (data === "create") {
       setComponent(Components.CREATE);

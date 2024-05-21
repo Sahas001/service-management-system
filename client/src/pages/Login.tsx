@@ -71,6 +71,10 @@ export function Login() {
     }
   };
 
+  if (!user) {
+    return <p>No User</p>;
+  }
+
   return (
     <div className="h-full w-screen">
       <Navbar type={user} />

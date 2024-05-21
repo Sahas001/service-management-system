@@ -4,7 +4,7 @@ import Banner from "../components/Banner";
 export default function HomePage() {
   return (
     <div className="relative h-screen">
-      <Navbar />
+      <Navbar type="STAFF" />
       <Banner />
     </div>
   );

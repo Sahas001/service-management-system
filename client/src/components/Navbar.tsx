@@ -7,7 +7,7 @@ export enum User {
   NULL,
 }
 
-export default function Navbar({ type }) {
+export default function Navbar({ type }: { type: User }) {
   const [user, setUser] = useState(User.NULL);
   return (
     <nav className="w-full z-40 fixed rounded-lg">
