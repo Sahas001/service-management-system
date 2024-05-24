@@ -8,7 +8,7 @@ export default function ServicePage() {
   const params = useParams() as { id: string };
   const { data, loading, error } = useService(params.id);
   const navigate = useNavigate();
-  const [user, setUser] = useState(User.CUSTOMER);
+  const [user, setUser] = useState("Customer");
 
   if (loading) {
     return <div>Loading...</div>;
@@ -40,7 +40,7 @@ export default function ServicePage() {
             <p className="text-3xl">Price: {price}</p>
           </div>
 
-          {user === User.CUSTOMER &&
+          {user === "Customer" &&
             (
               <button
                 type="submit"

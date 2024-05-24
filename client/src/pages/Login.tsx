@@ -1,5 +1,5 @@
-import { createContext, useRef, useState } from "react";
-import Navbar, { User } from "../components/Navbar";
+import { createContext, useContext, useState } from "react";
+import Navbar from "../components/Navbar";
 import { Input } from "../components/Input";
 import {
   FieldErrors,
@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { Inputs } from "../types/type";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../AppContext";
+import { UserContext } from "../UserContext";
 
 enum Variant {
   SIGN_UP,
@@ -31,9 +31,11 @@ export function Login() {
     Inputs
   >();
   const [variant, setVariant] = useState(Variant.LOG_IN);
-  const selectRef = useRef<HTMLSelectElement>(null);
   const navigate = useNavigate();
-  const { user, dispatch } = useAppContext();
+
+  const { setUserRole } = useContext(UserContext);
+
+  const [role, setRole] = useState("Staff");
 
   function handleChangeVariant() {
     if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
@@ -43,27 +45,13 @@ export function Login() {
   const onSubmit: SubmitHandler<Inputs> = (
     { email, password, username },
   ) => {
-    dispatch({ type: "authenticate" });
-
-    const type = selectRef.current?.value;
-
-    if (type === "STA") {
-      dispatch({
-        type: "authenticated",
-        user: User.STAFF,
-      });
-    } else {
-      dispatch({
-        type: "authenticated",
-        user: User.CUSTOMER,
-      });
-    }
+    console.log(role);
 
     try {
       if (variant === Variant.SIGN_UP) {
-        console.log({ email, password, username, type });
+        console.log({ email, password, username, role });
       } else {
-        console.log({ email, password, type, user });
+        console.log({ email, password, role });
       }
       navigate("/home");
     } catch (error) {
@@ -71,13 +59,11 @@ export function Login() {
     }
   };
 
-  if (!user) {
-    return <p>No User</p>;
-  }
-
   return (
     <div className="h-full w-screen">
-      <Navbar type={user} />
+      {
+        /* <Navbar/> */
+      }
       <div className="flex justify-center items-center h-full">
         <div className="bg-black bg-opacity-70 p-16 self-center mt-20 w-full max-w-md rounded-md">
           <h2 className="text-white text-4xl mb-8 font-semibold">
@@ -123,14 +109,16 @@ export function Login() {
                 id="type"
                 name="type"
                 className="block rounded-md p-2.5 mb-2 w-full text-md focus:outline-none focus:ring-0 peer invalid:border-b-1 text-gray-900"
-                ref={selectRef}
+                onChange={(e) => setRole(e.target.value)}
+                value={role}
               >
-                <option value="STA">Staff</option>
-                <option value="CUS">Customer</option>
+                <option value="Staff">Staff</option>
+                <option value="Customer">Customer</option>
               </select>
 
               <input
                 type="submit"
+                onClick={() => setUserRole(role)}
                 className="bg-red-400 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700"
               />
             </form>
