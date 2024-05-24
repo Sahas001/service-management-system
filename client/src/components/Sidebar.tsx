@@ -7,7 +7,7 @@ type select = {
 
 export function Sidebar({ selectedState }: select) {
   const { userRole } = useContext(UserContext);
-  const [state, setState] = useState("create");
+  const [state, setState] = useState("browse");
   function handleCreateServiceClick() {
     selectedState("create");
     setState("create");
@@ -31,21 +31,18 @@ export function Sidebar({ selectedState }: select) {
       <div className="p-4 h-screen border-2 border-dashed border-gray-200 rounded-lg">
         <div className="h-full p-4 px-3 py-4 overflow-y-auto bg-gray-100 rounded-lg">
           <ul className="space-y-2 font-medium my-10">
-            {userRole === "Staff" &&
-              (
-                <li>
-                  <a
-                    onClick={handleCreateServiceClick}
-                    className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
-                      state === "create" ? "bg-gray-200" : null
-                    }`}
-                  >
-                    <p className="flex-1 ms-3 whitespace-nowrap">
-                      Create Service
-                    </p>
-                  </a>
-                </li>
-              )}
+            <li>
+              <a
+                onClick={handleCreateServiceClick}
+                className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 ${
+                  state === "create" ? "bg-gray-200" : null
+                }`}
+              >
+                <p className="flex-1 ms-3 whitespace-nowrap">
+                  {userRole === "Staff" ? "Create Service" : "Request Service"}
+                </p>
+              </a>
+            </li>
             <li>
               <a
                 onClick={handleBrowseServiceClick}

@@ -13,7 +13,9 @@ enum Components {
 }
 
 export function MainPage() {
-  const [component, setComponent] = useState(Components.CREATE);
+  const [component, setComponent] = useState<Components | null>(
+    Components.BROWSE,
+  );
 
   const handleChildData = (data: string) => {
     if (data === "create") {

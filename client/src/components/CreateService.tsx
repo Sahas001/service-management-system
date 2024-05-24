@@ -1,20 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Input } from "../components/Input";
 import { AuthFormContext } from "../pages/Login";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Inputs } from "../types/type";
 import useAuth from "../hooks/useAuth";
-
-enum Variant {
-  CREATE,
-  REQUEST,
-}
+import { UserContext } from "../UserContext";
 
 export function CreateService() {
-  const [variant, setVariant] = useState(Variant.CREATE);
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm<
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<
     Inputs
   >();
+  const { userRole } = useContext(UserContext);
 
   const { addService } = useAuth();
 
@@ -22,7 +18,7 @@ export function CreateService() {
     { serviceName, description, price },
   ) => {
     try {
-      if (variant === Variant.CREATE) {
+      if (userRole === "Staff") {
         await addService({
           name: serviceName,
           description,
@@ -33,13 +29,14 @@ export function CreateService() {
     } catch (error) {
       console.log("error");
     }
+    reset();
   };
 
   return (
     <div className="flex justify-center items-center h-full">
       <div className="p-20 self-center mt-2 w-full max-w-md rounded-md">
         <h2 className="text-4xl mb-8 font-semibold">
-          {variant === Variant.CREATE ? "Create Service" : "Request Service"}
+          {userRole === "Staff" ? "Create Service" : "Request Service"}
         </h2>
         <AuthFormContext.Provider value={{ register, errors }}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,7 +52,7 @@ export function CreateService() {
               type="text"
               placeholder="Description"
             />
-            {variant === Variant.CREATE && (
+            {userRole === "Staff" && (
               <Input
                 id="price"
                 name="price"
