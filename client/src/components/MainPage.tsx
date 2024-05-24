@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import { Sidebar } from "./Sidebar";
 import { BrowseService } from "./BrowseService";
 import { BrowseCustomer } from "./BrowseCustomer";
-import { useAppContext } from "../AppContext";
 // import { useNavigate } from "react-router-dom";
 
 enum Components {
@@ -15,14 +14,6 @@ enum Components {
 
 export function MainPage() {
   const [component, setComponent] = useState(Components.CREATE);
-  const { user } = useAppContext();
-
-  console.log(user);
-
-  if (!user) {
-    console.log("No User");
-    return <p>No User</p>;
-  }
 
   const handleChildData = (data: string) => {
     if (data === "create") {
@@ -36,7 +27,7 @@ export function MainPage() {
 
   return (
     <div>
-      <Navbar type={user} />
+      <Navbar />
       <div className="flex flex-row ">
         <Sidebar selectedState={handleChildData} />
         <div className="p-4 sm:ml-64 h-screen mt-16">

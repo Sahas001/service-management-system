@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
 import logo from "../assets/customer-service.png";
+import { UserContext } from "../UserContext";
 
-export enum User {
-  STAFF,
-  CUSTOMER,
-  NULL,
-}
+export type User = "STAFF" | "CUSTOMER";
 
-export default function Navbar({ type }: { type: User }) {
-  const [user, setUser] = useState(User.NULL);
+export default function Navbar() {
+  const { userRole } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log("userRole:", userRole);
+  }, [userRole]);
+
   return (
     <nav className="w-full z-40 fixed rounded-lg">
       <div className="px-16 py-5 flex bg-gray-50 items center">
@@ -20,12 +22,7 @@ export default function Navbar({ type }: { type: User }) {
         </div>
         <div className="cursor-pointer">
           <p className="text-xl font-bold cursor-pointer">
-            {type === User.STAFF && (
-              "Staff Control Panel"
-            )}
-            {type === User.CUSTOMER && (
-              "Customer Control Panel"
-            )}
+            {userRole && (`${userRole} Control Panel`)}
           </p>
         </div>
         <div className="cursor-pointer ml-auto">
