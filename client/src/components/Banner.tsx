@@ -20,7 +20,7 @@ export default function Banner() {
               href="/login"
               className="bg-red-400 mt-8 text-white p-4 px-16 text-lg rounded font-semibold hover:bg-red-700"
             >
-              Sign up
+              Login
             </a>
           </div>
         </div>

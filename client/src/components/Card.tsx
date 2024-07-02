@@ -23,7 +23,13 @@ export function Card({ id, name, description, organization }: CardProps) {
       </p>
       <a
         href="#"
-        onClick={() => navigate(`/home/service/${id}`)}
+        onClick={() => {
+          if (organization) {
+            navigate(`/home/customer/${id}`);
+          } else {
+            navigate(`/home/service/${id}`);
+          }
+        }}
         className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-400 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 "
       >
         Read more

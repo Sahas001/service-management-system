@@ -1,14 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useService } from "../hooks/useService";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
-import { User } from "../components/Navbar";
-import { useEffect, useState } from "react";
+import { useCustomer } from "../hooks/useCustomer";
 
 export default function ServicePage() {
-  const params = useParams() as { info: string; id: string };
+  const params = useParams() as { id: string };
   const navigate = useNavigate();
-  const [user, setUser] = useState("Customer");
-  const { data, loading, error } = useService(params.id);
+  const { data, loading, error } = useCustomer(params.id);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -18,7 +15,8 @@ export default function ServicePage() {
     return <div>{error}</div>;
   }
 
-  const { name, description, price } = data;
+  const { id, name, org } = data;
+  const description = "lorem epsum dolor sit amet";
 
   return (
     <div className="h-screen w-screen">
@@ -28,7 +26,9 @@ export default function ServicePage() {
           onClick={() => navigate("/home")}
         />
         <p className="text-3xl font-bold ml-5 mr-10">
-          <span className="font-light">Service Name: {name}</span>
+          <span className="font-light">
+            <b>{id}</b> Customer Name: {name}
+          </span>
         </p>
       </nav>
       <div className="flex justify-center items-center h-full">
@@ -37,18 +37,8 @@ export default function ServicePage() {
             <p className="mb-3 font-semibold text-xl text-gray-700">
               {description}
             </p>
-            <p className="text-3xl">Price: {price}</p>
+            <p className="text-3xl">{org}</p>
           </div>
-
-          {user === "Customer" &&
-            (
-              <button
-                type="submit"
-                className="bg-red-400 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700"
-              >
-                Subscribe
-              </button>
-            )}
         </div>
       </div>
     </div>
